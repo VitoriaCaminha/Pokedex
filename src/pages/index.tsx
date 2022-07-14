@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import {
   Button,
   Container,
@@ -12,13 +13,15 @@ interface Form {
   email: string
 }
 
-const submit = (form: Form) => {
-  const { email } = form
-  if (email === '') throw new Error('Preencha o campo com seu e-mail')
-  return (window.location.href = '/pokedex')
-}
-
 export default function Home() {
+  const router = useRouter()
+
+  const submit = (form: Form) => {
+    const { email } = form
+    if (email === '') throw new Error('Preencha o campo com seu e-mail')
+    router.push('/pokedex')
+  }
+
   return (
     <div>
       <Nav>

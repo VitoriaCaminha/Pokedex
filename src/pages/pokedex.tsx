@@ -34,7 +34,7 @@ const Pokedex: React.FC = () => {
   useEffect(() => {
     const getPokemon = async () => {
       const res = await axios.get(
-        'https://pokeapi.co/api/v2/pokemon?limit=0&offset=0',
+        'https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0',
       )
       res.data.results.forEach(async (pokemon: Pokemons) => {
         const poke = await axios.get(
@@ -46,8 +46,11 @@ const Pokedex: React.FC = () => {
     getPokemon()
   }, [])
 
-  const selectPokemon = (id: number) => {
-    console.log(id)
+  const selectPokemon = async (id: number) => {
+    const shape = await axios.get(
+      `https://pokeapi.co/api/v2/pokemon-form/${id}`,
+    )
+    console.log(shape.data.sprites.front_default)
   }
 
   return (
@@ -73,7 +76,7 @@ const Pokedex: React.FC = () => {
         </NavPokedex>
         <Main>
           <DivPokedexLeft>
-            <H2>#001 - BULBASAUR</H2>
+            <H2></H2>
             <DivPokemon></DivPokemon>
             <DivType></DivType>
             <DivHeightWeight>
