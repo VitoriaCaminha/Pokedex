@@ -1,18 +1,21 @@
-import { Button } from "../components/button"
-import { Container } from "../components/div"
-import { Img } from "../components/pokeball"
-import { Input } from "../components/input"
-import { Nav } from "../components/nav"
-import { LogoPokedex } from "../components/logoPokedex"
-import { IconSettings } from "../components/iconSettings"
+import {
+  Button,
+  Container,
+  Img,
+  Input,
+  Nav,
+  LogoPokedex,
+  IconSettings,
+} from '../components/styledComponents'
 
-function submit() {
-  var email = document.getElementById("email")
-  if (email.value == "") {
-    alert("Preencha o campo com seu e-mail")
-  } else {
-    window.location.href = "./pokedex"
-  }
+interface Form {
+  email: string
+}
+
+const submit = (form: Form) => {
+  const { email } = form
+  if (email === '') throw new Error('Preencha o campo com seu e-mail')
+  return (window.location.href = '/pokedex')
 }
 
 export default function Home() {
@@ -24,8 +27,8 @@ export default function Home() {
       </Nav>
       <Container>
         <Img />
-        <Input id="email" type="email" placeholder="Seu melhor e-mail" required />
-        <Button onClick={submit}>Acessar</Button>
+        <Input id="email" type="email" placeholder="Seu melhor e-mail" />
+        <Button onClick={() => submit}>Acessar</Button>
       </Container>
     </div>
   )

@@ -1,1 +1,0 @@
-export const LogoPokedex = () => <img src="logo-pokedex.png" />;

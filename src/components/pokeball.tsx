@@ -1,1 +1,0 @@
-export const Img = () => <img src="pokeball.svg" />;
