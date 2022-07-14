@@ -33,23 +33,24 @@ const Pokedex: React.FC = () => {
 
   useEffect(() => {
     const getPokemon = async () => {
+      setPokemons([])
       const res = await axios.get(
-        'https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0',
+        'https://pokeapi.co/api/v2/pokemon?limit=100&offset=0'
       )
       res.data.results.forEach(async (pokemon: Pokemons) => {
         const poke = await axios.get(
-          `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`,
+          `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`
         )
-        setPokemons((p) => [...p, poke.data])
+        debugger
+        setPokemons([...pokemons, poke.data])
       })
     }
     getPokemon()
   }, [])
 
-  const selectPokemon = (id: number) => { // Usar async await
-    const shape = axios.get(
-      `https://pokeapi.co/api/v2/pokemon-form/${id}`,
-    )
+  const selectPokemon = (id: number) => {
+    // Usar async await
+    const shape = axios.get(`https://pokeapi.co/api/v2/pokemon-form/${id}`)
     // console.log(shape.data.sprites.front_default)
   }
 
@@ -63,15 +64,17 @@ const Pokedex: React.FC = () => {
           </P>
           <SearchInput placeholder="Search by name or number" />
           <DivNames>
-            {pokemons.map((pokemon) => {
-              return (
-                <div>
-                  <ButtonName onClick={() => selectPokemon(pokemon.id)}>
-                    #0{pokemon.id} - {pokemon.name}
-                  </ButtonName>
-                </div>
-              )
-            })}
+            {pokemons
+              .sort((a, b) => a.id - b.id)
+              .map((pokemon) => {
+                return (
+                  <div>
+                    <ButtonName onClick={() => selectPokemon(pokemon.id)}>
+                      #0{pokemon.id} - {pokemon.name}
+                    </ButtonName>
+                  </div>
+                )
+              })}
           </DivNames>
         </NavPokedex>
         <Main>
