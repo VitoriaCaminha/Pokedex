@@ -46,11 +46,11 @@ const Pokedex: React.FC = () => {
     getPokemon()
   }, [])
 
-  const selectPokemon = async (id: number) => {
-    const shape = await axios.get(
+  const selectPokemon = (id: number) => { // Usar async await
+    const shape = axios.get(
       `https://pokeapi.co/api/v2/pokemon-form/${id}`,
     )
-    console.log(shape.data.sprites.front_default)
+    // console.log(shape.data.sprites.front_default)
   }
 
   return (
