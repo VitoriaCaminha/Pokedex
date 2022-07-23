@@ -196,6 +196,9 @@ export const NavPokedex = styled.div`
     padding: 50px 40px;
     float:left;
     max-width: 20vw;
+    img{
+        width: 15vw;
+    }
 `
 
 export const P = styled.p`

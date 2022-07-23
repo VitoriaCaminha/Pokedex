@@ -30,29 +30,32 @@ interface Pokemons {
 
 const Pokedex: React.FC = () => {
   const [pokemons, setPokemons] = useState<Pokemon[]>([])
+  let fetched = false
 
   useEffect(() => {
+    // usar onmount para desfazer um dos retornos do useeffect
     const getPokemon = async () => {
+      fetched = true
       setPokemons([])
       const res = await axios.get(
-        'https://pokeapi.co/api/v2/pokemon?limit=100&offset=0'
+        'https://pokeapi.co/api/v2/pokemon?limit=100&offset=0',
       )
       res.data.results.forEach(async (pokemon: Pokemons) => {
         const poke = await axios.get(
-          `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`
+          `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`,
         )
-        debugger
-        setPokemons([...pokemons, poke.data])
+        // debugger
+        setPokemons((p) => [...p, poke.data])
       })
     }
-    getPokemon()
+    if (!fetched) getPokemon()
   }, [])
 
   const selectPokemon = (id: number) => {
     // Usar async await
     const shape = axios.get(`https://pokeapi.co/api/v2/pokemon-form/${id}`)
     // console.log(shape.data.sprites.front_default)
-  }
+  } // Provavelmente vou criar uma nova função que chame
 
   return (
     <div>
@@ -80,7 +83,7 @@ const Pokedex: React.FC = () => {
         <Main>
           <DivPokedexLeft>
             <H2></H2>
-            <DivPokemon></DivPokemon>
+            <DivPokemon>{}</DivPokemon>
             <DivType></DivType>
             <DivHeightWeight>
               <DivHeight></DivHeight>
